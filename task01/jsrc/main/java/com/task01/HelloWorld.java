@@ -22,6 +22,7 @@ public class HelloWorld implements RequestHandler<Object, Map<String, Object>> {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("statusCode", 200);
 		resultMap.put("body", "Hello from Lambda");
+		//
 		return resultMap;
 	}
 }
