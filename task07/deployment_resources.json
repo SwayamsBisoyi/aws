@@ -3,32 +3,21 @@
     "policy_content": {
       "Statement": [
         {
-          "Effect": "Allow",
           "Action": [
             "logs:CreateLogGroup",
             "logs:CreateLogStream",
-            "logs:PutLogEvents"
-          ],
-          "Resource": "*"
-        },
-        {
-          "Effect": "Allow",
-          "Action": [
+            "logs:PutLogEvents",
             "dynamodb:GetItem",
             "dynamodb:Query",
             "dynamodb:PutItem",
-            "dynamodb:UpdateItem",
-            "dynamodb:BatchWriteItem",
-            "dynamodb:DeleteItem"
+            "dynamodb:Batch*",
+            "dynamodb:DeleteItem",
+            "ssm:PutParameter",
+            "ssm:GetParameter",
+            "kms:Decrypt"
           ],
-          "Resource": "*"
-        },
-        {
           "Effect": "Allow",
-          "Action": [
-            "appsync:GraphQL"
-          ],
-          "Resource": "arn:aws:appsync:eu-central-1:376129861747:apis/<your-appsync-api-id>"
+          "Resource": "*"
         }
       ],
       "Version": "2012-10-17"
@@ -40,16 +29,22 @@
     "resource_type": "dynamodb_table",
     "hash_key_name": "id",
     "hash_key_type": "S",
-    "read_capacity": 5,
-    "write_capacity": 5,
-    "attribute_definitions": [
-      {
-        "attribute_name": "id",
-        "attribute_type": "S"
-      }
-    ],
+    "read_capacity": 1,
+    "write_capacity": 1,
     "global_indexes": [],
     "autoscaling": [],
+    "tags": {}
+  },
+  "appsync_role": {
+    "resource_type": "iam_role",
+    "principal_service": "appsync",
+    "predefined_policies": [],
+    "custom_policies": [
+      "lambda-basic-execution"
+    ],
+    "allowed_accounts": [],
+    "instance_profile": false,
+    "permissions_boundary": "",
     "tags": {}
   }
 }
